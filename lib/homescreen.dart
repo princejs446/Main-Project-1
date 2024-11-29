@@ -33,7 +33,6 @@ class _HomescreenState extends State<Homescreen> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-       
             showModalBottomSheet(
               context: context,
               builder: (context) {
@@ -42,27 +41,27 @@ class _HomescreenState extends State<Homescreen> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      ListTile(
-                        leading: Icon(Icons.text_fields, size: 30),
-                        
-                        onTap: () {
-                         
+                      // Replace ListTile with IconButton for each option
+                      IconButton(
+                        icon: Icon(Icons.text_fields, size: 30),
+                        onPressed: () {
+                          // Add your action here
                           Navigator.pop(context);
                         },
                       ),
-                      ListTile(
-                        leading: Icon(Icons.list, size: 30),
-                       
-                        onTap: () {
-                      
+                      SizedBox(height: 10),
+                      IconButton(
+                        icon: Icon(Icons.list, size: 30),
+                        onPressed: () {
+                          // Add your action here
                           Navigator.pop(context);
                         },
                       ),
-                      ListTile(
-                        leading: Icon(Icons.check_box, size: 30),
-                       
-                        onTap: () {
-                         
+                      SizedBox(height: 10),
+                      IconButton(
+                        icon: Icon(Icons.check_box, size: 30),
+                        onPressed: () {
+                          // Add your action here
                           Navigator.pop(context);
                         },
                       ),
@@ -75,7 +74,6 @@ class _HomescreenState extends State<Homescreen> {
           backgroundColor: const Color.fromARGB(255, 93, 230, 98),
           child: Icon(Icons.add, color: Colors.black),
         ),
-    
       ),
     );
   }
