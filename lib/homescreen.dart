@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:main_project1/ListScreen.dart';
+import 'package:main_project1/TaskScreen.dart';
+import 'package:main_project1/TextScreen.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -8,6 +11,8 @@ class Homescreen extends StatefulWidget {
 }
 
 class _HomescreenState extends State<Homescreen> {
+  bool _showBottomIcons = false;
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -31,48 +36,81 @@ class _HomescreenState extends State<Homescreen> {
             ],
           ),
         ),
+        body: Stack(
+          children: [
+            // Main Tab Content
+            TabBarView(
+              children: [
+                Center(child: Text('Text Tab Content')),
+                Center(child: Text('List Tab Content')),
+                Center(child: Text('Task Tab Content')),
+              ],
+            ),
+            // Floating bottom icons
+            if (_showBottomIcons)
+              Positioned(
+                bottom: 90,
+                right: 20,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    FloatingActionButton(
+                      mini: true,
+                      backgroundColor: const Color.fromARGB(255, 93, 230, 98),
+                      child: Icon(Icons.notes, color: Colors.black),
+                      onPressed: () {
+                        setState(() {
+                          _showBottomIcons = false;
+                        });
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Textscreen()),
+                        );
+                      },
+                    ),
+                    SizedBox(height: 10),
+                    FloatingActionButton(
+                      mini: true,
+                      backgroundColor: const Color.fromARGB(255, 93, 230, 98),
+                      child: Icon(Icons.list, color: Colors.black),
+                      onPressed: () {
+                        setState(() {
+                          _showBottomIcons = false;
+                        });
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Listscreen()),
+                        );
+                      },
+                    ),
+                    SizedBox(height: 10),
+                    FloatingActionButton(
+                      mini: true,
+                      backgroundColor: const Color.fromARGB(255, 93, 230, 98),
+                      child: Icon(Icons.check_box, color: Colors.black),
+                      onPressed: () {
+                        setState(() {
+                          _showBottomIcons = false;
+                        });
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Taskscreen()),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+          ],
+        ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            showModalBottomSheet(
-              context: context,
-              builder: (context) {
-                return Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // Replace ListTile with IconButton for each option
-                      IconButton(
-                        icon: Icon(Icons.text_fields, size: 30),
-                        onPressed: () {
-                          // Add your action here
-                          Navigator.pop(context);
-                        },
-                      ),
-                      SizedBox(height: 10),
-                      IconButton(
-                        icon: Icon(Icons.list, size: 30),
-                        onPressed: () {
-                          // Add your action here
-                          Navigator.pop(context);
-                        },
-                      ),
-                      SizedBox(height: 10),
-                      IconButton(
-                        icon: Icon(Icons.check_box, size: 30),
-                        onPressed: () {
-                          // Add your action here
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ],
-                  ),
-                );
-              },
-            );
+            setState(() {
+              _showBottomIcons = !_showBottomIcons;
+            });
           },
           backgroundColor: const Color.fromARGB(255, 93, 230, 98),
-          child: Icon(Icons.add, color: Colors.black),
+          child: Icon(_showBottomIcons ? Icons.close : Icons.add, color: Colors.black),
         ),
       ),
     );
