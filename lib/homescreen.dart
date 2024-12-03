@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:main_project1/ListScreen.dart';
 import 'package:main_project1/TaskScreen.dart';
 import 'package:main_project1/TextScreen.dart';
+import 'package:main_project1/appwriteservice.dart';
 
 class Homescreen extends StatefulWidget {
-  const Homescreen({super.key});
-
   @override
   State<Homescreen> createState() => _HomescreenState();
 }
 
 class _HomescreenState extends State<Homescreen> {
-  bool _showBottomIcons = false;
+  late AppwriteService _appwriteService;
+  final _titlecontroller = TextEditingController();
+  final _contentcontroller = TextEditingController();
+  bool isFABVisible = true;
 
   @override
   Widget build(BuildContext context) {
@@ -19,16 +21,15 @@ class _HomescreenState extends State<Homescreen> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 9, 234, 16),
           title: Text(
             "Echo Note",
-            style: TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
+            style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
           ),
-          backgroundColor: const Color.fromARGB(255, 93, 230, 98),
-          bottom: const TabBar(
+          bottom: TabBar(
+            labelColor: Colors.white,
+            unselectedLabelColor: Colors.black,
+            indicatorColor: Colors.white,
             tabs: [
               Tab(text: 'Text'),
               Tab(text: 'List'),
@@ -36,81 +37,74 @@ class _HomescreenState extends State<Homescreen> {
             ],
           ),
         ),
+        floatingActionButton: isFABVisible
+            ? FloatingActionButton(
+                onPressed: () {
+                  setState(() {
+                    isFABVisible = false;
+                  });
+                },
+                backgroundColor: const Color.fromARGB(255, 9, 234, 16),
+                child: Text(
+                  "+",
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.black),
+                ),
+              )
+            : null,
+        floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
         body: Stack(
           children: [
-            // Main Tab Content
             TabBarView(
               children: [
-                Center(child: Text('Text Tab Content')),
-                Center(child: Text('List Tab Content')),
-                Center(child: Text('Task Tab Content')),
+                // Text Tab
+              
               ],
             ),
-            // Floating bottom icons
-            if (_showBottomIcons)
+            if (!isFABVisible)
               Positioned(
-                bottom: 90,
-                right: 20,
+                right: 10,
+                bottom: 20,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     FloatingActionButton(
-                      mini: true,
-                      backgroundColor: const Color.fromARGB(255, 93, 230, 98),
-                      child: Icon(Icons.notes, color: Colors.black),
                       onPressed: () {
-                        setState(() {
-                          _showBottomIcons = false;
-                        });
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => Textscreen()),
+                          MaterialPageRoute(builder: (BuildContext context) => Taskscreen()),
                         );
                       },
+                      mini: true,
+                      backgroundColor: const Color.fromARGB(255, 9, 234, 16),
+                      child: Icon(Icons.add_task),
                     ),
                     SizedBox(height: 10),
                     FloatingActionButton(
-                      mini: true,
-                      backgroundColor: const Color.fromARGB(255, 93, 230, 98),
-                      child: Icon(Icons.list, color: Colors.black),
                       onPressed: () {
-                        setState(() {
-                          _showBottomIcons = false;
-                        });
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => Listscreen()),
+                          MaterialPageRoute(builder: (BuildContext context) => Listscreen()),
                         );
                       },
+                      mini: true,
+                      backgroundColor: const Color.fromARGB(255, 9, 234, 16),
+                      child: Icon(Icons.check_box),
                     ),
                     SizedBox(height: 10),
                     FloatingActionButton(
-                      mini: true,
-                      backgroundColor: const Color.fromARGB(255, 93, 230, 98),
-                      child: Icon(Icons.check_box, color: Colors.black),
                       onPressed: () {
-                        setState(() {
-                          _showBottomIcons = false;
-                        });
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => Taskscreen()),
+                          MaterialPageRoute(builder: (BuildContext context) => Textscreen()),
                         );
                       },
+                      backgroundColor: const Color.fromARGB(255, 9, 234, 16),
+                      child: Icon(Icons.notes),
                     ),
                   ],
                 ),
               ),
           ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            setState(() {
-              _showBottomIcons = !_showBottomIcons;
-            });
-          },
-          backgroundColor: const Color.fromARGB(255, 93, 230, 98),
-          child: Icon(_showBottomIcons ? Icons.close : Icons.add, color: Colors.black),
         ),
       ),
     );
