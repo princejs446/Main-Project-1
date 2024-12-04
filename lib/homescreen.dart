@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:main_project1/ListScreen.dart';
+import 'package:main_project1/Listscreen_grid.dart';
 import 'package:main_project1/TaskScreen.dart';
+import 'package:main_project1/Taskscreen_grid.dart';
 import 'package:main_project1/TextScreen.dart';
+import 'package:main_project1/Textscreen_grid.dart';
 import 'package:main_project1/appwriteservice.dart';
 
 class Homescreen extends StatefulWidget {
@@ -56,8 +59,9 @@ class _HomescreenState extends State<Homescreen> {
           children: [
             TabBarView(
               children: [
-                // Text Tab
-              
+              Textscreen_grid(),
+              TaskScreen_grid(),
+              ListScreen_grid(),
               ],
             ),
             if (!isFABVisible)
